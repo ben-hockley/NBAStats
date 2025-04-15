@@ -41,5 +41,46 @@ async def games(request: Request, date: str):
         "current_date": date
     })
 
+class Team:
+        def __init__(self, full_name: str, abbreviation: str):
+            self.full_name = full_name
+            self.abbreviation = abbreviation
+
+@app.get("/teams", response_class=HTMLResponse)
+async def teams(request: Request):
+    teams = [
+        Team("Atlanta Hawks", "ATL"),
+        Team("Boston Celtics", "BOS"),
+        Team("Brooklyn Nets", "BKN"),
+        Team("Charlotte Hornets", "CHA"),
+        Team("Chicago Bulls", "CHI"),
+        Team("Cleveland Cavaliers", "CLE"),
+        Team("Dallas Mavericks", "DAL"),
+        Team("Denver Nuggets", "DEN"),
+        Team("Detroit Pistons", "DET"),
+        Team("Golden State Warriors", "GSW"),
+        Team("Houston Rockets", "HOU"),
+        Team("Indiana Pacers", "IND"),
+        Team("Los Angeles Clippers", "LAC"),
+        Team("Los Angeles Lakers", "LAL"),
+        Team("Memphis Grizzlies", "MEM"),
+        Team("Miami Heat", "MIA"),
+        Team("Milwaukee Bucks", "MIL"),
+        Team("Minnesota Timberwolves", "MIN"),
+        Team("New Orleans Pelicans", "NOP"),
+        Team("New York Knicks", "NYK"),
+        Team("Oklahoma City Thunder", "OKC"),
+        Team("Orlando Magic", "ORL"),
+        Team("Philadelphia 76ers", "PHI"),
+        Team("Phoenix Suns", "PHX"),
+        Team("Portland Trail Blazers", "POR"),
+        Team("Sacramento Kings", "SAC"),
+        Team("San Antonio Spurs", "SAS"),
+        Team("Toronto Raptors", "TOR"),
+        Team("Utah Jazz", "UTA"),
+        Team("Washington Wizards", "WAS")
+    ]
+    return templates.TemplateResponse("teams.html", {"request": request, "teams": teams})
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

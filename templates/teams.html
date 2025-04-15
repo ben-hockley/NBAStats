@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+
+{% block title %}NBA Teams{% endblock %}
+
+{% block content %}
+<section class="select-team">
+    <h1>NBA Teams</h1>
+    <div class="team-list">
+        {% for team in teams %}
+            <div class="team-card">
+                <a href="/teams/{{ team['abbreviation'] }}">
+                    <img src="/static/img/team_logos/{{ team['abbreviation'] }}.svg" alt="{{ team['full_name'] }} logo" width="40" height="40">
+                    <h2>{{ team['full_name'] }}</h2>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
