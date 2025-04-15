@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Stats Site</title>
     <link rel="stylesheet" href="/static/CSS/styles.css">
+
 </head>
 <body>
     <header>
@@ -21,14 +22,21 @@
     <main>
         <section>
             <h2>Recent NBA Games</h2>
-            <ul>
+            <div class="game-list">
+
                 {% for game in games %}
-                    <li>
-                        <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="50" height="50">
-                        <strong>{{ game['home_team']['full_name'] }}</strong> vs 
-                        <strong>{{ game['visitor_team']['full_name'] }}</strong>
-                        <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="50" height="50">
-                    </li>
+                    <div class="game-card">
+                        <div class="team">
+                            <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
+                            <p>{{ game['home_team']['full_name'] }}</p>
+                            <p>{{ game['home_team_score']}}</p>
+                        </div>
+                        <div class="team">
+                            <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
+                            <p>{{ game['visitor_team']['full_name'] }}</p>
+                            <p>{{ game['visitor_team_score']}}</p>
+                        </div>
+                    </div>
                 {% endfor %}
             </ul>
         </section>
@@ -41,7 +49,7 @@
             <ul>
                 <li>Player Stats</li>
                 <li>Team Rankings</li>
-                <li>Game Highlights</li>
+                <li>Recent Games</li>
             </ul>
         </section>
     </main>

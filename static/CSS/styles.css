@@ -1,0 +1,34 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.game-list{
+    width: 100%;
+    box-sizing: border-box;
+    margin:0;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin: 0 0 10px 0;
+    border: 1px solid black;
+    border-radius: 10px;;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+.game-card > .team {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
