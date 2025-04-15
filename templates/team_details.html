@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+
+{% block title %}{{ team['full_name'] }}{% endblock %}
+
+{% block content %}
+<section class="team-navbar">
+    <nav>
+        <ul>
+            <li><a href="/teams/{{ team['id'] }}">Details</a></li>
+            <li><a href="/teams/{{ team['id'] }}/games">Games</a></li>
+            <li><a href="/teams/{{ team['id'] }}/players">Players</a></li>
+        </ul>
+    </nav>
+</section>
+
+<section class="team-content">
+    <!-- Page-specific content will go here -->
+    <div class="team-details">
+        <h1>{{ team['full_name'] }}</h1>
+        <img src="/static/img/team_logos/{{ team['abbreviation'] }}.svg" alt="{{ team['full_name'] }} logo" width="100" height="100">
+        <p>City: {{ team['city'] }}</p>
+        <p>Conference: {{ team['conference'] }}</p>
+        <p>Division: {{ team['division'] }}</p>
+</section>
+{% endblock %}

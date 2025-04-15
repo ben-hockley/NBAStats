@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+
+{% block title %}{{ team['full_name'] }} Games 2024-25 Season{% endblock %}
+
+{% block content %}
+<section class="team-navbar">
+    <nav>
+        <ul>
+            <li><a href="/teams/{{ team['id'] }}">Details</a></li>
+            <li><a href="/teams/{{ team['id'] }}/games">Games</a></li>
+            <li><a href="/teams/{{ team['id'] }}/players">Players</a></li>
+        </ul>
+    </nav>
+</section>
+
+<section>
+<div class="game-list">
+    <h2>{{ team['full_name'] }} Games 2024-25</h2>
+    {% if games|length == 0 %}
+        <p>No games scheduled for today.</p>
+    {% endif %}
+    {% for game in games %}
+    <p class="game-date">{{ game['date'] }}</p>
+        <div class="game-card">
+            <div class="team">
+                <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
+                <p>{{ game['home_team']['full_name'] }}</p>
+                <p>{{ game['home_team_score']}}</p>
+            </div>
+            <div class="team">
+                <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
+                <p>{{ game['visitor_team']['full_name'] }}</p>
+                <p>{{ game['visitor_team_score']}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+
+{% block title %}{{ team['full_name'] }} Players{% endblock %}
+
+{% block content %}
+<section class="team-navbar">
+    <nav>
+        <ul>
+            <li><a href="/teams/{{ team['id'] }}">Details</a></li>
+            <li><a href="/teams/{{ team['id'] }}/games">Games</a></li>
+            <li><a href="/teams/{{ team['id'] }}/players">Players</a></li>
+        </ul>
+    </nav>
+</section>
+<section class="team-content">
+
+    <div class="player-list">
+        {% for player in players %}
+            <div class="player-card">
+                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position']}} #{{ player['jersey_number'] }}</h2>
+                <p>{{ player['height'] }}  {{ player['weight'] }}"</p>
+                <p>College : {{ player['college'] }}</p>
+                <p>Nationality: {{ player['country'] }}</p>
+                <p>Draft: R{{ player['draft_round'] }}P{{ player['draft_number'] }} ({{ player['draft_year'] }})</p>
+            </div>
+        {% endfor %}
+    </div>
+
+</section>
+{% endblock %}
