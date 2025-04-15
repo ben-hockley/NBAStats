@@ -1,59 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Stats Site</title>
-    <link rel="stylesheet" href="/static/CSS/styles.css">
+{% extends "template.html" %}
 
-</head>
-<body>
-    <header>
-        <h1>Welcome to NBA Stats Site</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/players">Players</a></li>
-                <li><a href="/teams">Teams</a></li>
-                <li><a href="/stats">Stats</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Recent NBA Games</h2>
-            <div class="game-list">
+{% block title %}NBA Stats (Home){% endblock %}
 
-                {% for game in games %}
-                    <div class="game-card">
-                        <div class="team">
-                            <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
-                            <p>{{ game['home_team']['full_name'] }}</p>
-                            <p>{{ game['home_team_score']}}</p>
-                        </div>
-                        <div class="team">
-                            <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
-                            <p>{{ game['visitor_team']['full_name'] }}</p>
-                            <p>{{ game['visitor_team_score']}}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </ul>
-        </section>
-        <section>
-            <h2>About Us</h2>
-            <p>Explore comprehensive NBA statistics, player profiles, and team insights.</p>
-        </section>
-        <section>
-            <h2>Features</h2>
-            <ul>
-                <li>Player Stats</li>
-                <li>Team Rankings</li>
-                <li>Recent Games</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-    </footer>
-</body>
-</html>
+{% block content %}
+<section>
+    <h2>About Us</h2>
+    <p>Explore comprehensive NBA statistics, player profiles, and team insights.</p>
+</section>
+<section>
+    <h2>Features</h2>
+    <ul>
+        <li>Player Stats</li>
+        <li>Team Rankings</li>
+        <li>Recent Games</li>
+    </ul>
+</section>
+{% endblock %}

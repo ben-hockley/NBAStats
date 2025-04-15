@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PAGE TITLE HERE{% endblock %}
+    </title>
+    <link rel="stylesheet" href="/static/CSS/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/players">Players</a></li>
+                <li><a href="/teams">Teams</a></li>
+                <li><a href="/redirectGames">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Page-specific content will go here -->
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 NBA Stats Site. All rights reserved.</p>
+    </footer>
+</body>

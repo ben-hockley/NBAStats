@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+
+{% block title %}NBA Games{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Recent NBA Games</h2>
+    <div class="game-list">
+        {% for game in games %}
+            <div class="game-card">
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
+                    <p>{{ game['home_team']['full_name'] }}</p>
+                    <p>{{ game['home_team_score']}}</p>
+                </div>
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
+                    <p>{{ game['visitor_team']['full_name'] }}</p>
+                    <p>{{ game['visitor_team_score']}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
