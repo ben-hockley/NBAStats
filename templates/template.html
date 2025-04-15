@@ -9,14 +9,12 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/players">Players</a></li>
-                <li><a href="/teams">Teams</a></li>
-                <li><a href="/redirectGames">Games</a></li>
-            </ul>
-        </nav>
+        <div class="topnav">
+            <a href="/home"><img src="/static/img/team_logos/NBA.svg" alt="NBA Logo" class="logo"></a>
+            <a href="#teams">Teams</a>
+            <a href="#players">Players</a>
+            <a href="/redirectGames">Games</a>
+        </div>
     </header>
     <main>
         {% block content %}

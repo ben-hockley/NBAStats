@@ -4,8 +4,18 @@
 
 {% block content %}
 <section>
-    <h2>Recent NBA Games</h2>
+    <div class="date-scrollbar">
+        {% for date in dates %}
+            <a href="/games/{{ date }}" class="{% if date == current_date %}active{% endif %}">
+                {{ date }}
+            </a>
+        {% endfor %}
+    </div>
     <div class="game-list">
+        <h2>Games on {{ current_date }}</h2>
+        {% if games|length == 0 %}
+            <p>No games scheduled for today.</p>
+        {% endif %}
         {% for game in games %}
             <div class="game-card">
                 <div class="team">
