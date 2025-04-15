@@ -20,6 +20,17 @@
     </header>
     <main>
         <section>
+            <h2>Recent NBA Games</h2>
+            <ul>
+                {% for game in games %}
+                    <li>
+                        <strong>{{ game['home_team']['full_name'] }}</strong> vs 
+                        <strong>{{ game['visitor_team']['full_name'] }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
             <h2>About Us</h2>
             <p>Explore comprehensive NBA statistics, player profiles, and team insights.</p>
         </section>

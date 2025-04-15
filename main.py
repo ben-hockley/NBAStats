@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
+from data.nba import get_nba_games
+
 
 app = FastAPI()
 
@@ -17,7 +19,8 @@ async def root():
 
 @app.get("/home", response_class=HTMLResponse)
 async def home(request: Request):  # Include the Request object
-    return templates.TemplateResponse("home.html", {"request": request})  # Render the home.html template
+    games = get_nba_games()
+    return templates.TemplateResponse("home.html", {"request": request, "games": games})  # Render the home.html template
 
 
 if __name__ == "__main__":
