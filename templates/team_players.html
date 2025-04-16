@@ -17,11 +17,15 @@
     <div class="player-list">
         {% for player in players %}
             <div class="player-card">
-                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position']}} #{{ player['jersey_number'] }}</h2>
+                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} #{{ player['jersey_number'] }}</h2>
                 <p>{{ player['height'] }}  {{ player['weight'] }}"</p>
                 <p>College : {{ player['college'] }}</p>
                 <p>Nationality: {{ player['country'] }}</p>
-                <p>Draft: R{{ player['draft_round'] }}P{{ player['draft_number'] }} ({{ player['draft_year'] }})</p>
+                {% if player['draft_round'] %}
+                <p>Draft: R {{ player['draft_round'] | int }} P {{ player['draft_number'] | int }} ({{ player['draft_year'] | int }})</p>
+                {% else %}
+                <p>Draft: Undrafted</p>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
