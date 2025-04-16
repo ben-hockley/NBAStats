@@ -19,9 +19,9 @@
             <div class="player-card">
                 <img src="{{ player['image_url'] }}" width="104" height="76">
                 <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} {% if player['jersey_number'] %}#{{ player['jersey_number'] }} {% endif %}</h2>
-                <p>{{ player['height'] }}  {{ player['weight'] }}"</p>
-                <p>College : {{ player['college'] }}</p>
-                <p>Nationality: {{ player['country'] }}</p>
+                <p>{% if player['height'] %}{{ player['height'] }}, {% endif %}  {% if player['weight'] %}{{ player['weight'] }} lbs{% endif %}</p>
+                {% if player['college'] %}<p>College : {{ player['college'] }}</p>{% endif %}
+                {% if player['country'] %}<p>Nationality: {{ player['country'] }}</p>{% endif %}
                 {% if player['draft_round'] %}
                 <p>Draft: R {{ player['draft_round'] | int }} P {{ player['draft_number'] | int }} ({{ player['draft_year'] | int }})</p>
                 {% else %}
