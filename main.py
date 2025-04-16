@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from data.nba import get_nba_games
 from data.nba import get_team_players
 from data.nba import get_team_games
+from data.nba import get_standings
 from data.nba import NBA_teams
 
 
@@ -65,6 +66,11 @@ async def team_games(request: Request, team_id: int):
     team = next((team for team in NBA_teams if team.id == team_id), None)
     games = get_team_games(team_id)
     return templates.TemplateResponse("team_games.html", {"request": request, "team": team, "games": games})
+
+@app.get("/standings", response_class=HTMLResponse)
+async def standings(request: Request):
+    standings = get_standings()
+    return templates.TemplateResponse("standings.html", {"request": request, "standings": standings})
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

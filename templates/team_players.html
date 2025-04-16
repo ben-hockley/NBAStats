@@ -4,6 +4,7 @@
 
 {% block content %}
 <section class="team-navbar">
+    <h1 class="team-title">{{ team['full_name'] }}</h1>
     <nav>
         <ul>
             <li><a href="/teams/{{ team['id'] }}">Details</a></li>
@@ -17,8 +18,9 @@
     <div class="player-list">
         {% for player in players %}
             <div class="player-card">
-                <img src="{{ player['image_url'] }}" width="104" height="76">
-                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} {% if player['jersey_number'] %}#{{ player['jersey_number'] }} {% endif %}</h2>
+                <img src="{{ player['image_url'] }}">
+                <div class="player-info">
+                    <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} {% if player['jersey_number'] %}#{{ player['jersey_number'] }} {% endif %}</h2>
                 <p>{% if player['height'] %}{{ player['height'] }}, {% endif %}  {% if player['weight'] %}{{ player['weight'] }} lbs{% endif %}</p>
                 {% if player['college'] %}<p>College : {{ player['college'] }}</p>{% endif %}
                 {% if player['country'] %}<p>Nationality: {{ player['country'] }}</p>{% endif %}
@@ -27,9 +29,9 @@
                 {% else %}
                 <p>Draft: Undrafted</p>
                 {% endif %}
-            </div>
+                </div>
+        </div>
         {% endfor %}
     </div>
-
 </section>
 {% endblock %}

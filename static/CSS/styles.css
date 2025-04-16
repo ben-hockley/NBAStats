@@ -171,3 +171,57 @@ body {
     color: white;
 }
 
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.player-list .player-card {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 200px;
+    margin: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    font-size: 50%;
+}
+.player-list .player-card img {
+    height: 60%;
+    margin: auto;
+}
+.player-list .player-card .player-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    text-align: center;
+}
+.player-list .player-card .player-info h2 {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+.player-list .player-card .player-info p {
+    margin: 5px 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.team-title {
+    text-align: center;
+    font-size: 2em;
+    margin:0;
+    font-weight: bold;
+    color: var(--nba-secondary);
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    background-color: var(--nba-primary);
+}
+

@@ -54,6 +54,7 @@ NBA_teams = [
     Team(30, "Washington Wizards", "WAS", "Washington", "Eastern", "Southeast")
 ]
 
+# List of active NBA players (last updated : 16/4/2025) credit : NBA.com
 NBA_ACTIVE_PLAYERS = [
     "Precious Achiuwa",
     "Steven Adams",
@@ -696,7 +697,7 @@ PLAYER_IMAGES = {
         "Josh Christopher":"https://cdn.nba.com/headshots/nba/latest/260x190/1630528.png",
         "Brandon Clarke":"https://cdn.nba.com/headshots/nba/latest/260x190/1629634.png",
         "Jordan Clarkson":"https://cdn.nba.com/headshots/nba/latest/260x190/203903.png",
-        "Nic Claxton":"https://cdn.nba.com/headshots/nba/latest/260x190/1629651.png",
+        "Nicolas Claxton":"https://cdn.nba.com/headshots/nba/latest/260x190/1629651.png",
         "Amir Coffey":"https://cdn.nba.com/headshots/nba/latest/260x190/1629599.png",
         "John Collins":"https://cdn.nba.com/headshots/nba/latest/260x190/1628381.png",
         "Zach Collins":"https://cdn.nba.com/headshots/nba/latest/260x190/1628380.png",
@@ -1126,7 +1127,19 @@ PLAYER_IMAGES = {
         "Trae Young":"https://cdn.nba.com/headshots/nba/latest/260x190/1629027.png",
         "Omer Yurtseven":"https://cdn.nba.com/headshots/nba/latest/260x190/1630209.png",
         "Ivica Zubac":"https://cdn.nba.com/headshots/nba/latest/260x190/1627826.png",
-        "Cody Zeller":"https://cdn.nba.com/headshots/nba/latest/260x190/203469.png"  
+        "Cody Zeller":"https://cdn.nba.com/headshots/nba/latest/260x190/203469.png",
+
+        "Kobe Bufkin":"https://cdn.nba.com/headshots/nba/latest/260x190/1641723.png",
+        "Keaton Wallace":"https://cdn.nba.com/headshots/nba/latest/260x190/1630811.png",
+        "Jacob Toppin":"https://cdn.nba.com/headshots/nba/latest/260x190/1631210.png",
+        "Mouhamed Gueye":"https://cdn.nba.com/headshots/nba/latest/260x190/1631243.png",
+        "Zaccharie Risacher":"https://cdn.nba.com/headshots/nba/latest/260x190/1642258.png",
+        "Daeqwon Plowden":"https://cdn.nba.com/headshots/nba/latest/260x190/1631342.png",
+
+        "Jordan Walsh":"https://cdn.nba.com/headshots/nba/latest/260x190/1641775.png",
+        "Miles Norris":"https://cdn.nba.com/headshots/nba/latest/260x190/1641936.png",
+        "Drew Peterson":"https://cdn.nba.com/headshots/nba/latest/260x190/1641809.png",
+        "Baylor Scheierman":"https://cdn.nba.com/headshots/nba/latest/260x190/1631248.png",
     }
 
 def get_nba_games(date : str):
@@ -1179,3 +1192,36 @@ def get_team_games(team_id : int):
         games += page.data
     
     return games
+
+def get_standings():
+    """
+    Goes through the entire list of regular season games to compile each teams record for the season
+    """
+    # Fetching all games for the 2024 season
+    page = api.nba.games.list(seasons=[2024], per_page=100, cursor=0)
+
+    games = page.data
+    # Check if there are more pages of games
+    while page.meta.next_cursor:
+        page = api.nba.games.list(seasons=[2024], per_page=100, cursor=page.meta.next_cursor)
+        games += page.data
+    
+    standings = {}
+    for game in games:
+        home_team = game.home_team.name
+        away_team = game.visitor_team.name
+
+        if home_team not in standings.keys():
+            standings[home_team] = {"wins": 0, "losses": 0}
+        if away_team not in standings.keys():
+            standings[away_team] = {"wins": 0, "losses": 0}
+
+        if game.status == "Final" and game.postseason == False:
+            if game.home_team_score > game.visitor_team_score:
+                standings[home_team]["wins"] += 1
+                standings[away_team]["losses"] += 1
+            elif game.home_team_score < game.visitor_team_score:
+                standings[home_team]["losses"] += 1
+                standings[away_team]["wins"] += 1
+
+    return standings
