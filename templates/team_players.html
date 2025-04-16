@@ -17,7 +17,8 @@
     <div class="player-list">
         {% for player in players %}
             <div class="player-card">
-                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} #{{ player['jersey_number'] }}</h2>
+                <img src="{{ player['image_url'] }}" width="104" height="76">
+                <h2>{{ player['first_name'] }} {{ player['last_name'] }}  {{ player['position'] }} {% if player['jersey_number'] %}#{{ player['jersey_number'] }} {% endif %}</h2>
                 <p>{{ player['height'] }}  {{ player['weight'] }}"</p>
                 <p>College : {{ player['college'] }}</p>
                 <p>Nationality: {{ player['country'] }}</p>
