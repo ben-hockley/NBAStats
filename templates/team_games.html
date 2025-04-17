@@ -17,44 +17,52 @@
 <section>
 <div class="game-list">
     <h2>{{ team['full_name'] }} Games 2024-25</h2>
-    <h3>Upcoming Games</h3>
-    {% if upcoming_games|length == 0 %}
-        <p>No upcoming games</p>
-    {% endif %}
-    {% for game in upcoming_games %}
-    <a href="/games/{{ game['date'] }}"><p class="game-date">{{ game['date'] }}</p></a>
-        <div class="game-card">
-            <div class="team">
-                <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
-                <a href="/teams/{{ game['home_team']['id'] }}"><p>{{ game['home_team']['full_name'] }}</p></a>
-                <p>{{ game['home_team_score'] | int }}</p>
+
+    <!-- Upcoming Games Section -->
+    <details open>
+        <summary><h3>Upcoming Games</h3></summary>
+        {% if upcoming_games|length == 0 %}
+            <p>No upcoming games</p>
+        {% endif %}
+        {% for game in upcoming_games %}
+        <a href="/games/{{ game['date'] }}"><p class="game-date">{{ game['date'] }}{% if game['postseason'] %} (PLAYOFFS) {% endif %}</p></a>
+            <div class="game-card">
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
+                    <a href="/teams/{{ game['home_team']['id'] }}"><p>{{ game['home_team']['full_name'] }}</p></a>
+                    <p>{{ game['home_team_score'] | int }}</p>
+                </div>
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
+                    <a href="/teams/{{ game['visitor_team']['id'] }}"><p>{{ game['visitor_team']['full_name'] }}</p></a>
+                    <p>{{ game['visitor_team_score'] | int }}</p>
+                </div>
             </div>
-            <div class="team">
-                <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
-                <a href="/teams/{{ game['visitor_team']['id'] }}"><p>{{ game['visitor_team']['full_name'] }}</p></a>
-                <p>{{ game['visitor_team_score'] | int }}</p>
-            </div>
-        </div>
         {% endfor %}
-    <h3>Played Games</h3>
-    {% if played_games|length == 0 %}
-        <p>No played games</p>
-    {% endif %}
-    {% for game in played_games %}
-    <a href="/games/{{ game['date'] }}"><p class="game-date">{{ game['date'] }}</p></a>
-        <div class="game-card">
-            <div class="team">
-                <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
-                <a href="/teams/{{ game['home_team']['id'] }}"><p>{{ game['home_team']['full_name'] }}</p></a>
-                <p>{{ game['home_team_score'] | int }}</p>
+    </details>
+
+    <!-- Played Games Section -->
+    <details>
+        <summary><h3>Played Games</h3></summary>
+        {% if played_games|length == 0 %}
+            <p>No played games</p>
+        {% endif %}
+        {% for game in played_games %}
+        <a href="/games/{{ game['date'] }}"><p class="game-date">{{ game['date'] }}</p></a>
+            <div class="game-card">
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['home_team']['abbreviation'] }}.svg" alt="{{ game['home_team']['full_name'] }} logo" width="40" height="40">
+                    <a href="/teams/{{ game['home_team']['id'] }}"><p>{{ game['home_team']['full_name'] }}</p></a>
+                    <p>{{ game['home_team_score'] | int }}</p>
+                </div>
+                <div class="team">
+                    <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
+                    <a href="/teams/{{ game['visitor_team']['id'] }}"><p>{{ game['visitor_team']['full_name'] }}</p></a>
+                    <p>{{ game['visitor_team_score'] | int }}</p>
+                </div>
             </div>
-            <div class="team">
-                <img src="/static/img/team_logos/{{ game['visitor_team']['abbreviation'] }}.svg" alt="{{ game['visitor_team']['full_name'] }} logo" width="40" height="40">
-                <a href="/teams/{{ game['visitor_team']['id'] }}"><p>{{ game['visitor_team']['full_name'] }}</p></a>
-                <p>{{ game['visitor_team_score'] | int }}</p>
-            </div>
-        </div>
         {% endfor %}
-    </div>
+    </details>
+</div>
 </section>
 {% endblock %}
