@@ -10,6 +10,7 @@ from data.nba import get_nba_games
 from data.nba import get_team_players
 from data.nba import get_team_games
 from data.nba import get_standings
+from data.nba import get_all_active_players
 from data.nba import NBA_teams
 
 
@@ -71,6 +72,11 @@ async def team_games(request: Request, team_id: int):
 async def standings(request: Request):
     standings = get_standings()
     return templates.TemplateResponse("standings.html", {"request": request, "standings": standings})
+
+@app.get("/players", response_class=HTMLResponse)
+async def players(request: Request):
+    players = get_all_active_players()
+    return templates.TemplateResponse("players.html", {"request": request, "players": players})
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

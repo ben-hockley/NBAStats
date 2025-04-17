@@ -1337,7 +1337,7 @@ def get_nba_games(date : str):
     Fetches the list of NBA games for a specific date.
     The date should be a string and in the format YYYY-MM-DD.
     """
-    # Fetching games for the 2024 season
+    # Fetching nba games from the date passed as args
     # Dates in the format YYYY-MM-DD
     games = api.nba.games.list(dates=[date]).data
     return games
@@ -1362,10 +1362,10 @@ def get_team_players(team_id : int):
     players = [player for player in players if player.weight or player.height]
     # remove duplicate players
     players = {player.first_name + " " + player.last_name: player for player in players}.values()
-    
     # Sort players by jersey number in proper numerical order
     players = sorted(
         [
+            # convert the player object to a dictionary and add the image url to it
             {
                 **player.__dict__,
                 "image_url": PLAYER_IMAGES.get(player.first_name + " " + player.last_name, PLAYER_IMAGES["default"])
@@ -1430,3 +1430,37 @@ def get_standings():
                 standings[away_team]["wins"] += 1
 
     return standings
+
+def get_all_active_players():
+    """
+    Returns a list of all active players in the NBA.
+    """
+    # Fetching all players in the NBA
+    page = api.nba.players.list(per_page=100, cursor=0)
+
+    players = page.data
+    # Check if there are more pages of players
+    while page.meta.next_cursor:
+        page = api.nba.players.list(per_page=100, cursor=page.meta.next_cursor)
+        players += page.data
+
+    # remove inactive players
+    players = [player for player in players if player.first_name + " " + player.last_name in NBA_ACTIVE_PLAYERS]
+    # remove players who have no weight or height (these are retired players with the same name/ outdated records)
+    players = [player for player in players if player.weight or player.height]
+    # remove duplicate players
+    players = {player.first_name + " " + player.last_name: player for player in players}.values()
+    # Sort players in alphabetical order by last name
+    players = sorted(
+        [
+            # convert the player object to a dictionary and add the image url to it
+            {
+                **player.__dict__,
+                "image_url": PLAYER_IMAGES.get(player.first_name + " " + player.last_name, PLAYER_IMAGES["default"])
+            }
+            for player in players
+        ],
+        key=lambda player: player.last_name
+    )
+    
+    return players
