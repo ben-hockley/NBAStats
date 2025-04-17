@@ -13,7 +13,13 @@
             <a href="/home"><img src="/static/img/team_logos/NBA.svg" alt="NBA Logo" class="logo"></a>
             <a href="/teams">Teams</a>
             <a href="/redirectGames">Schedule</a>
-            <a href="#myNBA">MyNBA</a>
+            <a id="myNBAtoggle">MyNBA</a>
+        </div>
+        <!--This is the dropdown menu for myNBA,
+        this is where the user can either sign in (if not signed in),
+        or manage their account (if signed in)-->
+        <div id="myNBAdropdown">
+            <h3>myNBA</h3>
         </div>
     </header>
     <main>
@@ -24,4 +30,5 @@
     <footer>
         <p>&copy; 2025 NBA Stats Site. All rights reserved.</p>
     </footer>
+    <script src="/static/JS/home.js"></script>
 </body>

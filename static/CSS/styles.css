@@ -48,7 +48,7 @@ body {
   }
 
   .topnav img {
-    width: 50px;
+    height: 30px;
   }
   
   /* Style the links inside the navigation bar */
@@ -224,4 +224,18 @@ body {
     border-bottom: 1px solid white;
     background-color: var(--nba-primary);
 }
-
+#myNBAdropdown {
+    display: none;
+    position:absolute;
+    top: 54px;
+    right: 0;
+    background-color: var(--nba-primary);
+    border: 5px solid var(--nba-secondary);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    z-index: 1;
+    color:white;
+    height: 100px;
+    width: 30%;
+    text-align: center;
+}
