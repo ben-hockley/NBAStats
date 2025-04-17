@@ -1330,9 +1330,6 @@ PLAYER_IMAGES = {
         "Colby Jones":"https://cdn.nba.com/headshots/nba/latest/260x190/1641732.png",
         "Jaylen Martin":"https://cdn.nba.com/headshots/nba/latest/260x190/1641798.png",
         "Alexandre Sarr":"https://cdn.nba.com/headshots/nba/latest/260x190/1642259.png"
-
-
-
     }
 
 def get_nba_games(date : str):
@@ -1361,16 +1358,22 @@ def get_team_players(team_id : int):
     # remove inactive players
     players = [player for player in players if (player.first_name + " " + player.last_name) in NBA_ACTIVE_PLAYERS]
 
+    # remove players who have no weight or height (these are retired players with the same name/ outdated records)
+    players = [player for player in players if player.weight or player.height]
     # remove duplicate players
     players = {player.first_name + " " + player.last_name: player for player in players}.values()
-
-    players = [
-        {
-            **player.__dict__,  # Convert the player object to a dictionary
-            "image_url": PLAYER_IMAGES.get(player.first_name + " " + player.last_name, PLAYER_IMAGES["default"])
-        }
-        for player in players
-    ]
+    
+    # Sort players by jersey number in proper numerical order
+    players = sorted(
+        [
+            {
+                **player.__dict__,
+                "image_url": PLAYER_IMAGES.get(player.first_name + " " + player.last_name, PLAYER_IMAGES["default"])
+            }
+            for player in players
+        ],
+        key=lambda player: int(player.get("jersey_number", float('inf'))) if player.get("jersey_number") else float('inf')
+    )
 
     return players
 
