@@ -1389,8 +1389,14 @@ def get_team_games(team_id : int):
     while page.meta.next_cursor:
         page = api.nba.games.list(team_ids=[team_id], seasons=[2024], per_page=100, cursor=page.meta.next_cursor)
         games += page.data
+
+    # reverse the games list so that the most recent game is first
+    games.reverse()
+    # split the games into games that have been played and games that are upcoming
+    played_games = [game for game in games if game.status == "Final"]
+    upcoming_games = [game for game in games if game.status != "Final"]
     
-    return games
+    return played_games, upcoming_games
 
 def get_standings():
     """

@@ -64,8 +64,8 @@ async def team_players(request: Request, team_id: int):
 @app.get("/teams/{team_id}/games", response_class=HTMLResponse)
 async def team_games(request: Request, team_id: int):
     team = next((team for team in NBA_teams if team.id == team_id), None)
-    games = get_team_games(team_id)
-    return templates.TemplateResponse("team_games.html", {"request": request, "team": team, "games": games})
+    played_games, upcoming_games = get_team_games(team_id)
+    return templates.TemplateResponse("team_games.html", {"request": request, "team": team, "played_games": played_games, "upcoming_games": upcoming_games})
 
 @app.get("/standings", response_class=HTMLResponse)
 async def standings(request: Request):
