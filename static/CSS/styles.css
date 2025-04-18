@@ -243,3 +243,35 @@ body {
     color: var(--nba-secondary);
     font-weight: bold;
 }
+
+.register-section{
+    text-align: center;
+    background-color: var(--nba-primary);
+    color: var(--nba-secondary);
+}
+.register-section h2 {
+    font-size: 2em;
+    margin: 0;
+    padding: 20px 0;
+}
+.register-section h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+.register-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+}
+.register-section form input[type="text"],
+.register-section form input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid var(--nba-secondary);
+    font-size: 1em;
+}
