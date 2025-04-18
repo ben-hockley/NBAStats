@@ -17,6 +17,8 @@ from account.accounts import init_users_db
 from account.accounts import insert_new_user
 from account.accounts import check_password
 
+from account.accounts import get_following_teams
+
 from account.current_user import current_user
 
 
@@ -162,6 +164,16 @@ async def logout_user(request: Request):
     current_user["signed_in"] = False
     current_user["username"] = None
     return RedirectResponse(url="/home", status_code=303)
+
+@app.get("/myNBA/favorites", response_class=HTMLResponse)
+async def favourites(request: Request):
+    if current_user["signed_in"]:
+        user = current_user['username']
+    else:
+        user = None
+    following_teams = get_following_teams(user)
+
+    return templates.TemplateResponse("favorites.html", {"request": request, "current_user": user, "following_teams": following_teams})
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

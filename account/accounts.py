@@ -1,6 +1,10 @@
 import sqlite3
 import bcrypt
 
+from data.nba import NBA_teams
+from data.nba import get_team_by_id
+from data.nba import Team
+
 def hash_password(password):
     # Generate a salt and hash the password
     salt = bcrypt.gensalt()
@@ -56,3 +60,38 @@ def check_password(username, password):
     # Check if the password matches the hashed password
     bytes = password.encode('utf-8')
     return bcrypt.checkpw(bytes, user[2])
+
+def follow_new_team(username, team_id):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Update the user's following_teams field to include the new team
+    following = cur.execute("SELECT following_teams FROM users WHERE username=?", (username,)).fetchone()
+    if following is None:
+        new_following = str(team_id)
+    else:
+        following = following[0].split(",")
+        following.append(str(team_id))
+        new_following = ",".join(following)
+    # Update the database with the new following_teams
+    cur.execute("UPDATE users SET following_teams = ? WHERE username=?", (new_following, username))
+    conn.commit()
+    conn.close()
+
+def get_following_teams(username):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Retrieve the user's following_teams field
+    cur.execute("SELECT following_teams FROM users WHERE username=?", (username,))
+    following = cur.fetchone()
+    conn.close()
+    if following is None:
+        return []
+    else:
+        following = following[0].split(",")
+        following = [int(team_id) for team_id in following if team_id.isdigit()]
+        print(following)
+        following_teams = []
+        for team_id in following:
+            team = get_team_by_id(team_id)
+            following_teams.append(team)
+        return following_teams

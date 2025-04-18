@@ -54,6 +54,12 @@ NBA_teams = [
     Team(30, "Washington Wizards", "WAS", "Washington", "Eastern", "Southeast")
 ]
 
+def get_team_by_id(team_id: int) -> Team:
+    for team in NBA_teams:
+        if team.id == team_id:
+            return team
+    return None
+
 # List of active NBA players (last updated : 16/4/2025) credit : NBA.com
 NBA_ACTIVE_PLAYERS = [
     "Precious Achiuwa",

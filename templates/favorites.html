@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+
+{% block title %}Favourites{% endblock %}
+
+{% block content %}
+<section class="favourites-section">
+ 
+    <h1>My Favourites</h1>
+ 
+    <div class="favourites">
+        <h2>Favourite Teams</h2>
+        {% if following_teams|length == 0 %}
+        <p>No favourites added yet.</p>
+        {% else %}
+        <ul>
+        {% for favourite in following_teams %}
+            <li>{{ favourite['full_name'] }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        </div>
+</section>    
+{% endblock %}
