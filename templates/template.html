@@ -19,7 +19,20 @@
         this is where the user can either sign in (if not signed in),
         or manage their account (if signed in)-->
         <div id="myNBAdropdown">
-            <h3>myNBA</h3>
+            {% if current_user %}
+            <h3>Welcome back {{current_user}}</h3>
+            <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <h3>Sign in</h3>
+            <form action="/login" method="POST">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Sign In</button>
+                <p>Don't have an account? <a href="/register" class="register_link">Register</a></p>
+            </form>
+            {% endif %}
         </div>
     </header>
     <main>

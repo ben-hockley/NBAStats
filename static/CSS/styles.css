@@ -235,7 +235,11 @@ body {
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
     z-index: 1;
     color:white;
-    height: 100px;
+    height: min-content;
     width: 30%;
     text-align: center;
+}
+.register_link {
+    color: var(--nba-secondary);
+    font-weight: bold;
 }
