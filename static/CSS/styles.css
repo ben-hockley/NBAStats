@@ -119,6 +119,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: 100px;
     height: 100px;
     margin: 10px;
@@ -134,6 +135,10 @@ body {
 }
 
 .select-team {
+    text-align: center;
+}
+
+.team-navbar {
     text-align: center;
 }
 
@@ -275,4 +280,38 @@ body {
     border-radius: 5px;
     border: 1px solid var(--nba-secondary);
     font-size: 1em;
+}
+
+.favorites-section {
+    text-align: center;
+    background-color: var(--nba-primary);
+    color: var(--nba-secondary);
+}
+.favorites-section h1 {
+    font-size: 2em;
+    margin: 0;
+    padding: 20px 0;
+}
+.favorites-section h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+.favorites-section a {
+    text-decoration: none;
+    color: white;
+}
+.favorites-section .team-list {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+.favorites-section .team-list .team-card {
+    background-color: var(--nba-primary);
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
 }

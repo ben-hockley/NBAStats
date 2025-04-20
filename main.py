@@ -183,11 +183,14 @@ async def favorites_games(request: Request):
         user = current_user['username']
     else:
         user = None
-    following_teams_ids = get_following_teams_ids(user)
 
+    following_teams_ids = get_following_teams_ids(user)
+    favorite_teams = get_following_teams(user)
+
+    # Get the games for the teams the user is following 
     played_games, upcoming_games = get_many_teams_games(following_teams_ids)
 
-    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "played_games": played_games, "upcoming_games": upcoming_games})
+    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "played_games": played_games, "upcoming_games": upcoming_games, "favorite_teams": favorite_teams})
     
 
     return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "games": games})

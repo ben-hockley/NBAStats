@@ -3,21 +3,26 @@
 {% block title %}Favourites{% endblock %}
 
 {% block content %}
-<section class="favourites-section">
+<section class="favorites-section">
  
     <h1>My Favourites</h1>
  
-    <div class="favourites">
+    <div class="favorites">
         <h2>Favourite Teams</h2>
         {% if following_teams|length == 0 %}
         <p>No favourites added yet.</p>
         {% else %}
-        <ul>
-        {% for favourite in following_teams %}
-            <li>{{ favourite['full_name'] }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
+        <div class="team-list">
+            {% for team in following_teams %}
+                <div class="team-card">
+                    <a href="/teams/{{ team['id'] }}">
+                        <img src="/static/img/team_logos/{{ team['abbreviation'] }}.svg" alt="{{ team['full_name'] }} logo" width="40" height="40">
+                        <h2>{{ team['full_name'] }}</h2>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
+        {% endif %}
+    </div>
 </section>    
 {% endblock %}
