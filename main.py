@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from data.nba import get_nba_games
 from data.nba import get_team_players
 from data.nba import get_team_games
+from data.nba import get_many_teams_games
 from data.nba import get_standings
 from data.nba import get_all_active_players
 from data.nba import NBA_teams
@@ -18,6 +19,7 @@ from account.accounts import insert_new_user
 from account.accounts import check_password
 
 from account.accounts import get_following_teams
+from account.accounts import get_following_teams_ids
 
 from account.current_user import current_user
 
@@ -175,5 +177,19 @@ async def favourites(request: Request):
 
     return templates.TemplateResponse("favorites.html", {"request": request, "current_user": user, "following_teams": following_teams})
 
+@app.get("/myNBA/favorites_games", response_class=HTMLResponse)
+async def favorites_games(request: Request):
+    if current_user["signed_in"]:
+        user = current_user['username']
+    else:
+        user = None
+    following_teams_ids = get_following_teams_ids(user)
+
+    played_games, upcoming_games = get_many_teams_games(following_teams_ids)
+
+    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "played_games": played_games, "upcoming_games": upcoming_games})
+    
+
+    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "games": games})
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

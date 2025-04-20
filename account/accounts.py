@@ -95,3 +95,17 @@ def get_following_teams(username):
             team = get_team_by_id(team_id)
             following_teams.append(team)
         return following_teams
+    
+def get_following_teams_ids(username):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Retrieve the user's following_teams field
+    cur.execute("SELECT following_teams FROM users WHERE username=?", (username,))
+    following = cur.fetchone()
+    conn.close()
+    if following is None:
+        return []
+    else:
+        following = following[0].split(",")
+        following = [int(team_id) for team_id in following if team_id.isdigit()]
+        return following

@@ -1,3 +1,4 @@
+from typing import List
 from balldontlie import BalldontlieAPI
 
 from keys import API_KEY
@@ -1404,6 +1405,28 @@ def get_team_games(team_id : int):
     upcoming_games = [game for game in games if game.status != "Final"]
     
     return played_games, upcoming_games
+
+def get_many_teams_games(team_ids : List[int]):
+    """
+    Fetches the list of games for several NBA teams on the 2024 season.
+    """
+    page = api.nba.games.list(team_ids=team_ids, seasons=[2024], per_page=100, cursor=0)
+
+    games = page.data
+
+    # Check if there are more pages of games
+    while page.meta.next_cursor:
+        page = api.nba.games.list(team_ids=team_ids, seasons=[2024], per_page=100, cursor=page.meta.next_cursor)
+        games += page.data
+
+    # reverse the games list so that the most recent game is first
+    games.reverse()
+    # split the games into games that have been played and games that are upcoming
+    played_games = [game for game in games if game.status == "Final"]
+    upcoming_games = [game for game in games if game.status != "Final"]
+
+    return played_games, upcoming_games
+
 
 def get_standings():
     """
