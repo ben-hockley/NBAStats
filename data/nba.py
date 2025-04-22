@@ -1494,3 +1494,9 @@ def get_all_active_players():
     )
     
     return players
+
+def get_player_image_link(player_name : str):
+    """
+    Returns the image link for a player given their name.
+    """
+    return PLAYER_IMAGES.get(player_name, PLAYER_IMAGES["default"])

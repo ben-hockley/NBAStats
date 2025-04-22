@@ -5,6 +5,8 @@ from data.nba import NBA_teams
 from data.nba import get_team_by_id
 from data.nba import Team
 
+from data.nba import get_player_image_link
+
 def hash_password(password):
     # Generate a salt and hash the password
     salt = bcrypt.gensalt()
@@ -125,3 +127,60 @@ def get_following_teams_ids(username):
         following = following[0].split(",")
         following = [int(team_id) for team_id in following if team_id.isdigit()]
         return following
+    
+def get_following_players(username):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Retrieve the user's following_players field
+    cur.execute("SELECT following_players FROM users WHERE username=?", (username,))
+    following = cur.fetchone()
+    conn.close()
+    if following is None:
+        return []
+    if following[0] is None:
+        return []
+    else:
+        following = following[0].split(",")
+        following = [str(player_name) for player_name in following]
+        # convert each player name to a player object with the image
+        following_players = []
+        for player_name in following:
+            player_image = get_player_image_link(player_name)
+            player = {
+                "name": player_name,
+                "image": player_image
+            }
+            following_players.append(player)
+        return following_players
+    
+def follow_new_player(username, player_name):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Update the user's following_players field to include the new player
+    following = cur.execute("SELECT following_players FROM users WHERE username=?", (username,)).fetchone()
+    if following is None:
+        new_following = str(player_name)
+    else:
+        following = following[0].split(",")
+        following.append(str(player_name))
+        new_following = ",".join(following)
+    # Update the database with the new following_players
+    cur.execute("UPDATE users SET following_players = ? WHERE username=?", (new_following, username))
+    conn.commit()
+    conn.close()
+
+def unfollow_player(username, player_name):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Update the user's following_players field to remove the player
+    following = cur.execute("SELECT following_players FROM users WHERE username=?", (username,)).fetchone()
+    if following is None:
+        return
+    else:
+        following = following[0].split(",")
+        following.remove(str(player_name))
+        new_following = ",".join(following)
+    # Update the database with the new following_players
+    cur.execute("UPDATE users SET following_players = ? WHERE username=?", (new_following, username))
+    conn.commit()
+    conn.close()

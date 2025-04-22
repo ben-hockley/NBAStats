@@ -12,7 +12,9 @@ from data.nba import get_team_games
 from data.nba import get_many_teams_games
 from data.nba import get_standings
 from data.nba import get_all_active_players
+from data.nba import get_player_image_link
 from data.nba import NBA_teams
+from data.nba import NBA_ACTIVE_PLAYERS
 
 from account.accounts import init_users_db
 from account.accounts import insert_new_user
@@ -20,9 +22,12 @@ from account.accounts import check_password
 
 from account.accounts import get_following_teams
 from account.accounts import get_following_teams_ids
-
 from account.accounts import follow_new_team
 from account.accounts import unfollow_team
+
+from account.accounts import get_following_players
+from account.accounts import follow_new_player
+from account.accounts import unfollow_player
 
 from account.current_user import current_user
 
@@ -171,26 +176,34 @@ async def logout_user(request: Request):
     return RedirectResponse(url="/home", status_code=303)
 
 # manage account page
-@app.get("/myNBA/favorites", response_class=HTMLResponse)
+@app.get("/myNBA/manage-account", response_class=HTMLResponse)
 async def favourites(request: Request):
     if current_user["signed_in"]:
         user = current_user['username']
     else:
         user = None
     following_teams = get_following_teams(user)
-
+    following_players = get_following_players(user)
     addable_teams = NBA_teams.copy()
-
     # remove followed teams from add team selection
     for team in addable_teams:
         for following_team in following_teams:
             if team.id == following_team.id:
                 addable_teams.remove(team)
                 break
+    
+    addable_players = NBA_ACTIVE_PLAYERS.copy()
+    # remove followed players from add player selection
+    for player in addable_players:
+        for following_player in following_players:
+            if player == following_player["name"]:
+                addable_players.remove(player)
+                break
+    
 
-    return templates.TemplateResponse("favorites.html", {"request": request, "current_user": user, "following_teams": following_teams, "addable_teams": addable_teams})
+    return templates.TemplateResponse("manage-account.html", {"request": request, "current_user": user, "following_teams": following_teams, "addable_teams": addable_teams, "following_players": following_players, "addable_players": addable_players})
 
-@app.get("/myNBA/favorites_games", response_class=HTMLResponse)
+@app.get("/myNBA/favorites", response_class=HTMLResponse)
 async def favorites_games(request: Request):
     if current_user["signed_in"]:
         user = current_user['username']
@@ -203,14 +216,14 @@ async def favorites_games(request: Request):
     # Get the games for the teams the user is following 
     played_games, upcoming_games = get_many_teams_games(following_teams_ids)
 
-    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "played_games": played_games, "upcoming_games": upcoming_games, "favorite_teams": favorite_teams})
+    return templates.TemplateResponse("favorites.html", {"request": request, "current_user": user, "played_games": played_games, "upcoming_games": upcoming_games, "favorite_teams": favorite_teams})
 
 @app.post("/addFavoriteTeam")
 async def add_favorite_team(request: Request):
     form = await request.form()
     team_id = form.get("team_id")
     follow_new_team(current_user["username"], team_id)
-    return RedirectResponse(url="/myNBA/favorites", status_code=303)
+    return RedirectResponse(url="/myNBA/manage-account", status_code=303)
 
 @app.post("/unFollowTeam")
 async def unfollow_following_team(request: Request):
@@ -219,11 +232,27 @@ async def unfollow_following_team(request: Request):
     # Remove the team from the user's followed teams in the database
     unfollow_team(current_user["username"], team_id)
     # Redirect to the manage account page
-    return RedirectResponse(url="/myNBA/favorites", status_code=303)
+    return RedirectResponse(url="/myNBA/manage-account", status_code=303)
+
+@app.post("/addFavoritePlayer")
+async def add_favorite_player(request: Request):
+    form = await request.form()
+    player_name = form.get("player_name")
+    follow_new_player(current_user["username"], player_name)
+    return RedirectResponse(url="/myNBA/manage-account", status_code=303)
+
+@app.post("/unFollowPlayer")
+async def unfollow_following_player(request: Request):
+    form = await request.form()
+    player_name = form.get("player_name")
+    # Remove the player from the user's followed players in the database
+    unfollow_player(current_user["username"], player_name)
+    # Redirect to the manage account page
+    return RedirectResponse(url="/myNBA/manage-account", status_code=303)
 
 
 
 
-    return templates.TemplateResponse("favorites_games.html", {"request": request, "current_user": user, "games": games})
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

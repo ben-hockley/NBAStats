@@ -1,0 +1,79 @@
+<!-- Redirect to this page when the user selects 'Manage Account' -->
+{% extends "template.html" %}
+
+{% block title %}Favourites{% endblock %}
+
+
+
+{% block content %}
+<section class="favorites-section">
+ 
+    <h1>My Favourites</h1>
+ 
+    <div class="favorites-subsection">
+        <h2>Favourite Teams</h2>
+        {% if following_teams|length == 0 %}
+        <p>No favourites added yet.</p>
+        {% else %}
+        <div class="team-list">
+            {% for team in following_teams %}
+                <div class="team-card">
+                    <a href="/teams/{{ team['id'] }}">
+                        <form action="/unFollowTeam" method="POST" class="unfollow_form">
+                            <button type="submit" style="background: url('/static/img/team_logos/remove.jpeg') no-repeat center center; background-size: 10px; width: 10px; height: 10px; border: none; cursor: pointer;"></button>
+                            <input type="hidden" name="team_id" value="{{ team['id'] }}">
+                        </form>
+                        <img src="/static/img/team_logos/{{ team['abbreviation'] }}.svg" alt="{{ team['full_name'] }} logo" width="40" height="40">
+                        <h2>{{ team['full_name'] }}</h2>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="team-card">
+                <form action="/addFavoriteTeam" method="POST">
+                    <button type="submit" style="background: url('/static/img/team_logos/add.jpeg') no-repeat center center; background-size: 40px 40px; width: 40px; height: 40px; border: none; cursor: pointer;"></button>
+                    </button>
+                    <h2>Add Team</h2>
+                    <select name="team_id" id="team_id" required>
+                        {% for team in addable_teams %}
+                            <option value="{{ team['id'] }}">{{ team['full_name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="favorites-subsection">
+        <h2>Favourite Players</h2>
+        {% if following_players|length == 0 %}
+        <p>No favourites added yet.</p>
+        {% else %}
+        <div class="team-list">
+            {% for player in following_players %}
+                <div class="team-card">
+                    <a href="#">
+                        <form action="/unFollowPlayer" method="POST" class="unfollow_form">
+                            <button type="submit" style="background: url('/static/img/team_logos/remove.jpeg') no-repeat center center; background-size: 10px; width: 10px; height: 10px; border: none; cursor: pointer;"></button>
+                            <input type="hidden" name="player_name" value="{{ player['name'] }}">
+                        </form>
+                        <img src="{{ player['image'] }}" alt="{{ player['name'] }}" width="52" height="38">
+                        <h2>{{ player['name'] }}</h2>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="team-card">
+                <form action="/addFavoritePlayer" method="POST">
+                    <button type="submit" style="background: url('/static/img/team_logos/add.jpeg') no-repeat center center; background-size: 40px 40px; width: 40px; height: 40px; border: none; cursor: pointer;"></button>
+                    </button>
+                    <h2>Add Player</h2>
+                    <select name="player_name" id="player_name" required>
+                        {% for player_name in addable_players %}
+                            <option value="{{ player_name }}">{{ player_name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+        </div>
+        {% endif %}
+    </div>
+</section>    
+{% endblock %}
