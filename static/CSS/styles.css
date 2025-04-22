@@ -284,39 +284,20 @@ body {
 
 .favorites-section {
     text-align: center;
-    background-color: var(--nba-primary);
-    color: var(--nba-secondary);
-}
-.favorites-section h1 {
-    font-size: 2em;
-    margin: 0;
-    padding: 20px 0;
-}
-.favorites-section h2 {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
-.favorites-section a {
-    text-decoration: none;
-    color: white;
-}
-.favorites-section .team-list {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-}
-.favorites-section .team-list .team-card {
-    background-color: var(--nba-primary);
-    color: white;
-    font-size: 1em;
-    padding: 10px;
+    border: 1px solid var(--nba-secondary);
     border-radius: 5px;
-    margin: 10px;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+.favorites-subsection {
+    border-top: var(--nba-primary) solid 1px;
+    border-bottom: var(--nba-primary) solid 1px;
 }
 
 .playoffs{
     height:80px;
     margin:0 auto 0 auto;
+}
+.unfollow_form button{
+    position: relative;
+    left: 45%;
 }

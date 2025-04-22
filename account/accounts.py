@@ -77,6 +77,22 @@ def follow_new_team(username, team_id):
     conn.commit()
     conn.close()
 
+def unfollow_team(username, team_id):
+    conn = sqlite3.connect('users.db')
+    cur = conn.cursor()
+    # Update the user's following_teams field to remove the team
+    following = cur.execute("SELECT following_teams FROM users WHERE username=?", (username,)).fetchone()
+    if following is None:
+        return
+    else:
+        following = following[0].split(",")
+        following.remove(str(team_id))
+        new_following = ",".join(following)
+    # Update the database with the new following_teams
+    cur.execute("UPDATE users SET following_teams = ? WHERE username=?", (new_following, username))
+    conn.commit()
+    conn.close()
+
 def get_following_teams(username):
     conn = sqlite3.connect('users.db')
     cur = conn.cursor()
