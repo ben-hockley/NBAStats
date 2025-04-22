@@ -23,8 +23,8 @@
             <h3>Welcome back {{current_user}}</h3>
             <form action="/logout" method="POST">
                 <button type="submit">Logout</button>
-                <a href="/myNBA/manage-account">Manage Account</a>
-                <a href="/myNBA/favorites">Favorites</a>
+                <a href="/myNBA/manage-account" class="account-link">Manage Account</a>
+                <a href="/myNBA/favorites" class="account-link">Favorites</a>
             </form>
             {% else %}
             <h3>Sign in</h3>

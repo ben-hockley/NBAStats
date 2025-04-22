@@ -297,7 +297,23 @@ body {
     height:80px;
     margin:0 auto 0 auto;
 }
-.unfollow_form button{
+.unfollow_form {
     position: relative;
-    left: 45%;
+    overflow: visible;
+}
+.unfollow_form button{
+    display: block !important;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    z-index: 10;
+}
+.add_favorites{
+    width:80%;
+    margin:0 auto 0 auto;
+}
+.account-link {
+    color: white;
+    width: 100%;
+    text-align: center;
 }

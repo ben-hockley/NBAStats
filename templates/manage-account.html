@@ -33,7 +33,7 @@
                     <button type="submit" style="background: url('/static/img/team_logos/add.jpeg') no-repeat center center; background-size: 40px 40px; width: 40px; height: 40px; border: none; cursor: pointer;"></button>
                     </button>
                     <h2>Add Team</h2>
-                    <select name="team_id" id="team_id" required>
+                    <select name="team_id" id="team_id" class="add_favorites" required>
                         {% for team in addable_teams %}
                             <option value="{{ team['id'] }}">{{ team['full_name'] }}</option>
                         {% endfor %}
@@ -66,7 +66,7 @@
                     <button type="submit" style="background: url('/static/img/team_logos/add.jpeg') no-repeat center center; background-size: 40px 40px; width: 40px; height: 40px; border: none; cursor: pointer;"></button>
                     </button>
                     <h2>Add Player</h2>
-                    <select name="player_name" id="player_name" required>
+                    <select name="player_name" id="player_name" class="add_favorites" required>
                         {% for player_name in addable_players %}
                             <option value="{{ player_name }}">{{ player_name }}</option>
                         {% endfor %}
